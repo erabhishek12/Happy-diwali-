@@ -1,149 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ A Spectacular Diwali Experience ✨</title>
+    <title>🌟 परम दिवाली अनुभव 🌟</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --dark-bg: #0a001a;
-            --deep-violet: #1e003b;
+            --dark-bg: #04000d;
             --gold: #FFD700;
             --orange: #ffab40;
             --magenta: #f06292;
             --cyan: #4dd0e1;
-            --whatsapp-green: #25D366;
+            --transition-speed: 0.5s;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
             height: 100vh; width: 100vw; overflow: hidden;
             font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); color: #fff;
+            cursor: none;
         }
 
-        /* --- Keyframe Animations --- */
+        /* --- KEYFRAME ANIMATIONS --- */
         @keyframes gradient-shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         @keyframes zoom-loop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
         @keyframes neon-pulse { 0%, 100% { box-shadow: 0 0 5px var(--cyan), 0 0 15px var(--cyan); } 50% { box-shadow: 0 0 10px var(--magenta), 0 0 30px var(--magenta); } }
         @keyframes name-glow-loop { 0%{color:var(--gold);text-shadow:0 0 8px var(--gold)} 33%{color:var(--orange);text-shadow:0 0 8px var(--orange)} 66%{color:var(--magenta);text-shadow:0 0 8px var(--magenta)} 100%{color:var(--gold);text-shadow:0 0 8px var(--gold)} }
         @keyframes liquid-shimmer { 0% { background-position: -500% 0; } 100% { background-position: 500% 0; } }
-        @keyframes rangoli-pulse { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
         @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes float-up { from { transform: translateY(100vh); opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
-        @keyframes fall-down { from { transform: translateY(-10vh); opacity: 1; } to { transform: translateY(100vh); opacity: 0; } }
-        @keyframes gift-pulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px var(--cyan)); } 50% { transform: scale(1.1); filter: drop-shadow(0 0 18px var(--cyan)); } }
+        @keyframes rotate-mandala { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes flicker { 0%, 100% { opacity: 1; } 20% { opacity: 0.5; } 40% { opacity: 0.8; } 60% { opacity: 0.3; } 80% { opacity: 0.9; } }
+        @keyframes diya-bob { 0% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-10px) rotate(5deg); } 100% { transform: translateY(0px) rotate(-5deg); } }
 
-        /* --- Landing Screen --- */
-        .fullscreen-view { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: fixed; top: 0; left: 0; transition: opacity 1.5s ease-in-out, visibility 1.5s; }
-        #landing-screen { background: linear-gradient(135deg, #ff8c00, #ff00ff, #00ffff, #ffd700); background-size: 400% 400%; animation: gradient-shift 10s ease infinite; z-index: 1000; }
-        #landing-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        /* --- LANDING SCREEN --- */
+        #landing-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #ff8c00, #ff00ff, #00ffff, #ffd700);
+            background-size: 400% 400%;
+            animation: gradient-shift 10s ease infinite;
+            z-index: 2000;
+            transition: opacity 1.5s ease-in-out;
+        }
+        #landing-screen.hidden { opacity: 0; pointer-events: none; }
         #landing-screen h1 { font-size: clamp(2rem, 8vw, 4.5rem); color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: zoom-loop 5s ease-in-out infinite; padding: 0 20px; }
-        .celebrate-button { margin-top: 40px; padding: 15px 30px; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: bold; color: white; background-color: rgba(0,0,0,0.4); border: 2px solid var(--cyan); border-radius: 50px; cursor: pointer; animation: neon-pulse 2s ease-in-out infinite; transition: all 0.3s ease; }
+        .celebrate-button { margin-top: 40px; padding: 15px 30px; font-size: clamp(1.2rem, 4vw, 1.7rem); font-weight: bold; color: white; background-color: rgba(0,0,0,0.4); border: 2px solid var(--cyan); border-radius: 50px; cursor: pointer !important; animation: neon-pulse 2s ease-in-out infinite; transition: all 0.3s ease; }
         .celebrate-button:hover { transform: scale(1.1); background-color: rgba(0,0,0,0.6); }
-
-        /* --- Main Celebration Screen --- */
-        #celebration-screen { opacity: 0; z-index: 50; pointer-events: none; visibility: hidden; }
-        #celebration-screen.visible { opacity: 1; pointer-events: auto; visibility: visible; }
-        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         
-        .content-wrapper { display: flex; flex-direction: column; width: 100%; height: 100%; padding: 2vh 2vw; z-index: 10; }
-        .header-content { flex-shrink: 0; animation: fade-in-up 1.5s 0.5s both; }
-        .main-content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; animation: fade-in-up 1.5s 0.8s both; gap: 2vh; }
+        /* --- MAIN SCENE & LAYOUT --- */
+        #celebration-screen { opacity: 0; visibility: hidden; width:100%; height:100%; position: fixed; transition: opacity 1.5s ease-in-out; }
+        #celebration-screen.visible { opacity: 1; visibility: visible; }
+        #scene { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; } /* BUG FIX: z-index must be lower than content */
+        .scene-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: transform 0.2s ease-out; }
+        #sky-layer { background: radial-gradient(ellipse at 50% 100%, #1e003b 0%, #04000d 70%); }
+        #sky-glow { background: radial-gradient(circle at 50% 70%, rgba(255,171,64,0.25) 0%, transparent 70%); opacity: 0; transition: opacity 0.5s ease; }
+        #cityscape-layer { background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 400"><path fill="%2304000d" d="M0 400 V200 C100 210, 200 150, 300 160 C400 170, 500 120, 600 130 C700 140, 800 100, 900 110 C1000 120, 1100 80, 1200 90 C1300 100, 1400 70, 1500 80 C1600 90, 1700 60, 1800 70 C1860 75, 1920 50, 1920 50 V400 Z" /><path fill="%230a001a" d="M0 400 V250 C80 240, 150 280, 220 270 C300 260, 380 300, 450 290 C520 280, 600 320, 680 310 C750 300, 820 340, 900 330 C980 320, 1050 360, 1120 350 C1200 340, 1280 380, 1350 370 C1420 360, 1500 400, 1580 390 C1650 380, 1720 400, 1800 400 H1920 V400 Z" /></svg>') no-repeat bottom center; background-size: cover; }
+        #mouse-light { background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 50%); }
+        .flicker-light { position: absolute; width: 3px; height: 3px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 5px var(--gold); animation: flicker 5s infinite; }
+
+        .content-wrapper { display: flex; flex-direction: column; width: 100%; height: 100%; padding: 2vh 2vw; z-index: 10; position: relative; } /* BUG FIX: z-index added */
+        .header-content { flex-shrink: 0; animation: fade-in-up 1.5s 0.5s both; text-align: center; }
+        .main-content { flex-grow: 1; display: flex; align-items: center; justify-content: center; min-height: 0; animation: fade-in-up 1.5s 0.8s both; }
         .footer-content { flex-shrink: 0; animation: fade-in-up 1.5s 1.1s both; }
         
-        .main-header { font-family: 'Great Vibes', cursive; font-size: clamp(2.5rem, 9vw, 5rem); background: linear-gradient(90deg, var(--orange), var(--gold), var(--magenta), var(--gold), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-size: 300% 100%; animation: liquid-shimmer 4s linear infinite; text-shadow: 0 0 5px rgba(255, 171, 64, 0.5), 0 0 15px rgba(240, 98, 146, 0.5), 0 0 30px rgba(10, 0, 30, 0.8); }
-        .gif-frame { position: relative; max-width: 380px; width: 80%; transition: transform 0.3s ease-out; transform-style: preserve-3d; perspective: 1000px; }
-        #diwali-gif { width: 100%; height: auto; border-radius: 20px; border: 3px solid var(--gold); box-shadow: 0 0 10px var(--gold), 0 0 20px var(--orange), 0 10px 40px rgba(10, 0, 30, 0.5); }
+        .main-header { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 6rem); text-wrap: balance; background: linear-gradient(90deg, var(--orange), var(--gold), var(--magenta), var(--gold), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-size: 300% 100%; animation: liquid-shimmer 4s linear infinite; text-shadow: 0 0 5px rgba(255,171,64,0.5), 0 0 15px rgba(240,98,146,0.5), 0 0 30px rgba(4,0,13,0.8); }
+        
+        #mandala-portal { position: relative; max-width: 400px; width: 90vmin; max-height: 400px; height: 90vmin; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease-out; transform-style: preserve-3d; perspective: 1000px; }
+        #mandala-svg { position: absolute; width: 100%; height: 100%; animation: rotate-mandala 120s linear infinite; filter: drop-shadow(0 0 15px var(--gold)); }
+        #diwali-gif { position: relative; width: 65%; height: 65%; border-radius: 50%; object-fit: cover; box-shadow: 0 0 15px var(--gold), inset 0 0 10px rgba(0,0,0,0.5); border: 2px solid var(--gold); }
 
-        /* Panel logic for receiving vs creating */
-        .greeting-panel { transition: opacity 0.5s, transform 0.5s; }
-        .greeting-panel.hidden { opacity: 0; pointer-events: none; position: absolute; transform: scale(0.95); }
+        .greeting-panel { transition: opacity var(--transition-speed), transform var(--transition-speed); text-align: center; }
+        .greeting-panel.hidden { opacity: 0; pointer-events: none; position: absolute; transform: scale(0.95); left: 0; right: 0; margin: auto; }
         #receiving-panel, #creating-panel { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1.5vh; }
-        #received-greeting-text { font-size: clamp(1.1rem, 4vw, 1.5rem); text-align: center; text-shadow: 0 0 8px var(--magenta); }
+        #received-greeting-text { font-size: clamp(1.1rem, 4vw, 1.5rem); text-shadow: 0 0 8px var(--magenta); }
         #received-sender-name { font-weight: bold; animation: name-glow-loop 4s linear infinite; }
         .affiliate-subtext { font-size: 0.9em; opacity: 0.8; }
-        .affiliate-subtext a { color: var(--cyan); text-decoration: none; font-weight: bold; }
-        .personalize-button { background: linear-gradient(90deg, var(--cyan), var(--magenta)); }
+        .affiliate-subtext a { color: var(--cyan); text-decoration: none; font-weight: bold; cursor: pointer !important; }
         
         .form-container { display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; margin: 0 auto; }
-        .form-container input, .form-container textarea { width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: #fff; text-align: center; backdrop-filter: blur(5px); transition: box-shadow 0.3s ease; }
-        .form-container input::placeholder, .form-container textarea::placeholder { color: rgba(255, 255, 255, 0.6); }
+        .form-container input, .form-container textarea { width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: #fff; text-align: center; backdrop-filter: blur(5px); transition: box-shadow 0.3s ease; cursor: text !important; }
         .form-container input:focus, .form-container textarea:focus { outline: none; box-shadow: 0 0 15px var(--cyan); }
         .form-container textarea { resize: none; height: 50px; }
         
-        .buttons-container { display: flex; flex-direction: column; align-items: center; gap: 1.5vh; width: 100%; padding-top: 1.5vh; }
-        .cta-button { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: clamp(0.9rem, 2.5vw, 1rem); cursor: pointer; transition: all 0.3s ease; border: none; }
+        .buttons-container { display: flex; flex-direction: column; align-items: center; gap: 1.5vh; width: 100%; padding-top: 1vh; }
+        .cta-button { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: clamp(1rem, 2.5vw, 1.2rem); cursor: pointer !important; transition: all 0.3s ease; border: none; }
         .cta-button:hover { transform: scale(1.05); }
+        .personalize-button { background: linear-gradient(90deg, var(--cyan), var(--magenta)); box-shadow: 0 0 15px rgba(77, 208, 225, 0.5); }
         .gift-button { color: var(--dark-bg); background: linear-gradient(90deg, var(--orange), var(--gold), var(--orange)); background-size: 200% 100%; animation: liquid-shimmer 3s linear infinite reverse; }
         .gift-button:hover { box-shadow: 0 0 20px var(--gold); }
-        .share-button { background-color: var(--whatsapp-green); color: white; box-shadow: 0 0 10px var(--whatsapp-green); }
-        .share-button:hover { box-shadow: 0 0 20px var(--whatsapp-green); }
+        .share-button { background-color: #25D366; color: white; box-shadow: 0 0 10px #25D366; }
+        .share-button:hover { box-shadow: 0 0 20px #25D366; }
 
-        .rangoli-corner { position: fixed; width: 15vmax; height: 15vmax; z-index: 5; opacity: 0.8; filter: drop-shadow(0 0 10px var(--magenta)); animation: rangoli-pulse 6s ease-in-out infinite; pointer-events: none; }
-        .rangoli-corner svg path { fill: url(#rg); }
-        #rc1 { top: -2vmax; left: -2vmax; } #rc2 { top: -2vmax; right: -2vmax; transform: rotate(90deg); } #rc3 { bottom: -2vmax; right: -2vmax; transform: rotate(180deg); } #rc4 { bottom: -2vmax; left: -2vmax; transform: rotate(270deg); }
-
-        #floating-gift { position: fixed; bottom: 20px; right: 20px; z-index: 101; font-size: 2.5rem; cursor: pointer; animation: gift-pulse 2s ease-in-out infinite; }
-        .particle, .floating-emoji, .falling-emoji { position: fixed; z-index: 100; pointer-events: none; }
-        .floating-emoji { font-size: 2rem; text-shadow: 0 0 10px var(--gold); animation: float-up 10s linear infinite; }
-        .falling-emoji { font-size: 1.5rem; animation: fall-down 8s linear infinite; }
+        #floating-diya { position: fixed; bottom: 20px; right: 20px; z-index: 101; font-size: 2.5rem; cursor: pointer !important; animation: diya-bob 4s ease-in-out infinite; filter: drop-shadow(0 0 10px var(--orange)); }
+        #custom-cursor { position: fixed; width: 20px; height: 20px; border-radius: 50%; background: var(--gold); z-index: 3000; pointer-events: none; transform: translate(-50%, -50%); box-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold); transition: transform 0.1s ease-out; opacity: 0; }
+        body:hover #custom-cursor { opacity: 1; }
+        .particle { position: fixed; z-index: 200; pointer-events: none; border-radius: 50%; }
 
         @media (max-height: 650px) {
-            .main-header { font-size: clamp(2rem, 8vh, 3rem); } .gif-frame { max-width: 200px; }
-            .cta-button { padding: 8px 15px; font-size: clamp(0.8rem, 2.5vh, 0.9rem); }
+            .main-header { font-size: clamp(2.5rem, 8vh, 3.5rem); } #mandala-portal { width: 50vmin; height: 50vmin; }
+            .cta-button { padding: 8px 15px; font-size: clamp(0.9rem, 2.5vh, 1rem); }
             #received-greeting-text { font-size: clamp(1rem, 3.5vh, 1.2rem); }
-            .buttons-container, .greeting-panel { gap: 1vh; }
         }
     </style>
 </head>
 <body>
-    <div id="landing-screen" class="fullscreen-view">
-        <h1>✨ A Spectacular Diwali Experience ✨</h1>
-        <button id="celebrate-btn" class="celebrate-button">Enter the Festival of Lights</button>
+    <div id="landing-screen">
+        <h1>✨ आपके लिए एक दिव्य दिवाली का अनुभव ✨</h1>
+        <button id="celebrate-btn" class="celebrate-button">उत्सव शुरू करें</button>
     </div>
+    
+    <div id="custom-cursor"></div>
 
-    <div id="celebration-screen" class="fullscreen-view">
-        <canvas id="particle-canvas"></canvas>
-        <svg width="0" height="0"><defs><radialGradient id="rg"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#f06292"/></radialGradient></defs></svg>
-        <div class="rangoli-corner" id="rc1"><svg viewBox="0 0 100 100"><path d="M0 0 L50 0 A50 50 0 0 1 0 50 Z M20 0 L30 0 A20 20 0 0 1 0 30 L0 20 A20 20 0 0 0 20 0 Z"/></svg></div>
-        <div class="rangoli-corner" id="rc2"><svg viewBox="0 0 100 100"><path d="M0 0 L50 0 A50 50 0 0 1 0 50 Z M20 0 L30 0 A20 20 0 0 1 0 30 L0 20 A20 20 0 0 0 20 0 Z"/></svg></div>
-        <div class="rangoli-corner" id="rc3"><svg viewBox="0 0 100 100"><path d="M0 0 L50 0 A50 50 0 0 1 0 50 Z M20 0 L30 0 A20 20 0 0 1 0 30 L0 20 A20 20 0 0 0 20 0 Z"/></svg></div>
-        <div class="rangoli-corner" id="rc4"><svg viewBox="0 0 100 100"><path d="M0 0 L50 0 A50 50 0 0 1 0 50 Z M20 0 L30 0 A20 20 0 0 1 0 30 L0 20 A20 20 0 0 0 20 0 Z"/></svg></div>
+    <div id="celebration-screen">
+        <div id="scene">
+            <div id="sky-layer" class="scene-layer" data-depth="0.1"><div id="sky-glow" class="scene-layer"></div></div>
+            <div id="cityscape-layer" class="scene-layer" data-depth="0.2"></div>
+            <div id="mouse-light" class="scene-layer" data-depth="0"></div>
+        </div>
 
-        <a id="floating-gift" target="_blank">🎁</a>
+        <a id="floating-diya" target="_blank">🪔</a>
 
         <div class="content-wrapper">
-            <header class="header-content"><h1 class="main-header">Happy Diwali</h1></header>
+            <header class="header-content"><h1 class="main-header">शुभ दीपावली</h1></header>
 
             <main class="main-content">
-                <div id="gif-frame" class="gif-frame"><img id="diwali-gif" src="diwali.gif" alt="Animated Diwali Diya"></div>
+                <div id="mandala-portal">
+                    <svg id="mandala-svg" viewBox="0 0 100 100"><defs><radialGradient id="mandala-grad"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#ffab40"/></radialGradient></defs><circle cx="50" cy="50" r="48" stroke="url(#mandala-grad)" stroke-width="0.5" fill="none"/><circle cx="50" cy="50" r="35" stroke="url(#mandala-grad)" stroke-width="0.3" fill="none"/></svg>
+                    <img id="diwali-gif" src="diwali.gif" alt="दिवाली दिया">
+                </div>
             </main>
             
             <footer class="footer-content">
-                <!-- Panel for Receiving a Greeting -->
                 <div id="receiving-panel" class="greeting-panel hidden">
-                    <div id="received-greeting-text">
-                        <span id="received-sender-name"></span> sent you a spectacular Diwali greeting!
-                    </div>
-                    <p class="affiliate-subtext">Find a festive gift for <span id="gift-recipient-name">them</span> <a id="contextual-affiliate-link" href="#" target="_blank">here!</a></p>
-                    <button id="personalize-btn" class="cta-button personalize-button">✨ Personalize & Share Your Own ✨</button>
+                    <div id="received-greeting-text"><span id="received-sender-name"></span> ने आपके लिए दिवाली की शुभकामनाएं भेजी हैं!</div>
+                    <p class="affiliate-subtext"><span id="gift-recipient-name"></span> के लिए एक उपहार खोजें <a id="contextual-affiliate-link" href="#" target="_blank">यहां!</a></p>
+                    <button id="personalize-btn" class="cta-button personalize-button">✨ अपनी शुभकामनाएं बनाएं और भेजें ✨</button>
                 </div>
 
-                <!-- Panel for Creating a Greeting -->
                 <div id="creating-panel" class="greeting-panel">
                     <div class="form-container">
-                        <input type="text" id="name-input" placeholder="Your Name">
-                        <textarea id="msg-input" placeholder="Your Message"></textarea>
+                        <input type="text" id="name-input" placeholder="आपका नाम">
+                        <textarea id="msg-input" placeholder="आपका संदेश"></textarea>
                     </div>
                     <div class="buttons-container">
-                        <a id="gift-btn" href="#" target="_blank" class="cta-button gift-button">🎁 Find a Perfect Diwali Gift</a>
-                        <a id="share-btn" class="cta-button share-button">
-                           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" fill="currentColor" style="margin-right: 8px;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z..."></path></svg>
-                            Share this Greeting
-                        </a>
+                        <a id="gift-btn" href="#" target="_blank" class="cta-button gift-button">🎁 दिवाली के शानदार उपहार खोजें</a>
+                        <a id="share-btn" class="cta-button share-button">📤 व्हाट्सएप पर भेजें</a>
                     </div>
                 </div>
             </footer>
@@ -155,14 +160,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const AFFILIATE_LINK = "https://amzn.to/43ivTKB";
+            let isInitialized = false;
+            let audioContext, analyser, dataArray;
 
-            // Main elements
-            const celebrateBtn = document.getElementById('celebrate-btn');
+            // --- DOM Elements ---
             const landingScreen = document.getElementById('landing-screen');
             const celebrationScreen = document.getElementById('celebration-screen');
             const audio = document.getElementById('diwali-audio');
-            
-            // Greeting panels and elements
             const receivingPanel = document.getElementById('receiving-panel');
             const creatingPanel = document.getElementById('creating-panel');
             const receivedSenderName = document.getElementById('received-sender-name');
@@ -171,80 +175,93 @@
             const msgInput = document.getElementById('msg-input');
             const personalizeBtn = document.getElementById('personalize-btn');
             const shareBtn = document.getElementById('share-btn');
+            const mandalaPortal = document.getElementById('mandala-portal');
+            const skyGlow = document.getElementById('sky-glow');
+            const scene = document.getElementById('scene');
+            const customCursor = document.getElementById('custom-cursor');
 
-            // Affiliate link elements
-            document.getElementById('gift-btn').href = AFFILIATE_LINK;
-            document.getElementById('floating-gift').href = AFFILIATE_LINK;
-            document.getElementById('contextual-affiliate-link').href = AFFILIATE_LINK;
-            
-            let isInitialized = false;
+            // --- Initial Setup ---
+            initUI();
+            initInteractivity();
 
-            // --- URL Parameter Logic for Viral Loop ---
-            const urlParams = new URLSearchParams(window.location.search);
-            const senderName = urlParams.get('name');
-            
-            if (senderName) {
-                // Receiving Mode
-                creatingPanel.classList.add('hidden');
-                receivingPanel.classList.remove('hidden');
-                const decodedSenderName = decodeURIComponent(senderName);
-                receivedSenderName.textContent = decodedSenderName;
-                giftRecipientName.textContent = decodedSenderName.split(' ')[0]; // Use first name for gift message
-            } else {
-                // Creating Mode (default)
-                receivingPanel.classList.add('hidden');
-                creatingPanel.classList.remove('hidden');
-            }
-
-            // --- Event Listeners ---
-            celebrateBtn.addEventListener('click', () => {
+            function startExperience() {
                 landingScreen.classList.add('hidden');
+                setTimeout(() => landingScreen.style.display = 'none', 1500);
                 celebrationScreen.classList.add('visible');
                 if (!isInitialized) initializeAudioAndEffects();
-                audio.play().catch(e => console.error("Audio play failed:", e));
-            });
+                audio.play().catch(e => console.log("User must interact with the page to play audio."));
+            }
 
-            personalizeBtn.addEventListener('click', () => {
-                receivingPanel.classList.add('hidden');
-                setTimeout(() => creatingPanel.classList.remove('hidden'), 300); // Wait for fade out
-            });
-
-            shareBtn.addEventListener('click', () => {
-                const name = nameInput.value.trim() || 'A Friend';
-                const msg = msgInput.value.trim() || 'Wishing you a joyous Festival of Lights! 🎆 🪔';
-                const baseUrl = window.location.origin + window.location.pathname;
-                const shareUrl = `${baseUrl}?name=${encodeURIComponent(name)}&msg=${encodeURIComponent(msg)}`;
-                const whatsappMessage = `✨ You received a spectacular Diwali greeting from *${name}*! ✨\n\n_"${msg}"_\n\nSee it here:\n${shareUrl}`;
-                window.open(`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
-            });
-            
-            // --- 3D Tilt Effect ---
-            const gifFrame = document.getElementById('gif-frame');
-            gifFrame.addEventListener('mousemove', e => {
-                const { left, top, width, height } = gifFrame.getBoundingClientRect();
-                const x = (e.clientX - left) / width - 0.5, y = (e.clientY - top) / height - 0.5;
-                gifFrame.style.transform = `rotateX(${-y * 20}deg) rotateY(${x * 20}deg)`;
-            });
-            gifFrame.addEventListener('mouseleave', () => { gifFrame.style.transform = 'rotateX(0) rotateY(0)'; });
-
-            // --- Initialization & Effects ---
-            let audioContext, analyser, dataArray;
             function initializeAudioAndEffects() {
                 isInitialized = true;
-                initParticleCanvas();
+                initCityscapeLights();
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioContext.createAnalyser();
                 const source = audioContext.createMediaElementSource(audio);
                 source.connect(analyser).connect(audioContext.destination);
                 analyser.fftSize = 256;
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
-                startContinuousEffects();
                 renderFrame();
             }
-            
-            function startContinuousEffects() {
-                setInterval(() => createEmoji('floating-emoji', ['🪔', '🕯️']), 1200);
-                setInterval(() => createEmoji('falling-emoji', ['🌸', '🌼', '🌺', '🌟']), 800);
+
+            function initUI() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const senderName = urlParams.get('name');
+                
+                document.getElementById('celebrate-btn').addEventListener('click', startExperience);
+                document.getElementById('gift-btn').href = AFFILIATE_LINK;
+                document.getElementById('floating-diya').href = AFFILIATE_LINK;
+                document.getElementById('contextual-affiliate-link').href = AFFILIATE_LINK;
+
+                if (senderName) {
+                    creatingPanel.classList.add('hidden');
+                    receivingPanel.classList.remove('hidden');
+                    const decodedSenderName = decodeURIComponent(senderName);
+                    receivedSenderName.textContent = decodedSenderName;
+                    giftRecipientName.textContent = decodedSenderName.split(' ')[0];
+                } else {
+                    receivingPanel.classList.add('hidden');
+                    creatingPanel.classList.remove('hidden');
+                }
+
+                personalizeBtn.addEventListener('click', () => {
+                    receivingPanel.classList.add('hidden');
+                    setTimeout(() => creatingPanel.classList.remove('hidden'), 500);
+                });
+
+                shareBtn.addEventListener('click', () => {
+                    const name = nameInput.value.trim() || 'एक दोस्त';
+                    const msg = msgInput.value.trim() || 'आपको रोशनी के इस त्योहार की बहुत-बहुत शुभकामनाएं!';
+                    const baseUrl = window.location.origin + window.location.pathname;
+                    const shareUrl = `${baseUrl}?name=${encodeURIComponent(name)}&msg=${encodeURIComponent(msg)}`;
+                    const whatsappMessage = `✨ *${name}* की तरफ से आपको दिवाली की दिव्य शुभकामनाएं! ✨\n\n_"${msg}"_\n\nयहां देखें:\n${shareUrl}`;
+                    window.open(`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                });
+            }
+
+            function initInteractivity() {
+                window.addEventListener('mousemove', e => {
+                    customCursor.style.left = e.clientX + 'px';
+                    customCursor.style.top = e.clientY + 'px';
+
+                    const x = (e.clientX / window.innerWidth - 0.5) * -1;
+                    const y = (e.clientY / window.innerHeight - 0.5) * -1;
+                    const sceneLayers = scene.querySelectorAll('.scene-layer');
+                    sceneLayers.forEach(layer => {
+                        const depth = layer.dataset.depth || 0;
+                        layer.style.transform = `translate(${x * depth * 50}px, ${y * depth * 50}px)`;
+                    });
+                });
+
+                mandalaPortal.addEventListener('mousemove', e => {
+                    const { left, top, width, height } = mandalaPortal.getBoundingClientRect();
+                    const x = (e.clientX - left) / width - 0.5;
+                    const y = (e.clientY - top) / height - 0.5;
+                    mandalaPortal.style.transform = `rotateX(${-y*15}deg) rotateY(${x*15}deg) scale(1.1)`;
+                });
+                mandalaPortal.addEventListener('mouseleave', () => mandalaPortal.style.transform = 'rotateX(0) rotateY(0) scale(1)');
+                
+                window.addEventListener('click', e => createSparkleBurst(e.clientX, e.clientY));
             }
 
             let lastPeakTime = 0;
@@ -252,49 +269,48 @@
                 requestAnimationFrame(renderFrame);
                 if (!isInitialized) return;
                 analyser.getByteFrequencyData(dataArray);
-                let average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-                if (average > 90 && Date.now() - lastPeakTime > 250) { 
+                
+                const bass = dataArray.slice(0, 5).reduce((a, b) => a + b, 0) / 5;
+                skyGlow.style.opacity = Math.min(1, bass / 180);
+
+                const highMids = dataArray.slice(20, 50).reduce((a, b) => a + b, 0) / 30;
+                if (highMids > 100 && Date.now() - lastPeakTime > 400) { 
                     lastPeakTime = Date.now();
-                    createFireworks(Math.random() * window.innerWidth, Math.random() * window.innerHeight * 0.5);
+                    createSparkleBurst(Math.random() * window.innerWidth, Math.random() * window.innerHeight * 0.4, 30);
                 }
             }
-
-            function createFireworks(x, y) {
-                const colors = ['#FFD700', '#ffab40', '#f06292', '#4dd0e1'];
-                for (let i = 0; i < 30; i++) {
-                    const p = document.createElement('div');
-                    p.className = 'particle';
-                    const size = Math.random() * 4 + 2;
-                    Object.assign(p.style, { width: `${size}px`, height: `${size}px`, left: `${x}px`, top: `${y}px`, background: colors[Math.floor(Math.random()*colors.length)] });
-                    const anim = p.animate(
-                        [{ t: 'translate(-50%,-50%) scale(1)', o: 1 }, { t: `translate(${-50+(Math.random()-.5)*250}%,${-50+(Math.random()-.5)*250}%) scale(0)`, o: 0 }],
-                        { duration: Math.random()*800+500, easing: 'ease-out' }
+            
+            function createSparkleBurst(x, y, count = 15) {
+                for (let i = 0; i < count; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'particle';
+                    const size = Math.random() * 4 + 1;
+                    Object.assign(sparkle.style, {
+                        width: `${size}px`, height: `${size}px`, left: `${x}px`, top: `${y}px`,
+                        background: `hsl(${Math.random() * 50 + 10}, 100%, 70%)`
+                    });
+                    document.body.appendChild(sparkle);
+                    const anim = sparkle.animate(
+                        [ { transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }, { transform: `translate(${-50+(Math.random()-.5)*150}%, ${-50+(Math.random()-.5)*150}%) scale(0)`, opacity: 0 }],
+                        { duration: Math.random() * 800 + 400, easing: 'ease-out' }
                     );
-                    anim.onfinish = () => p.remove();
+                    anim.onfinish = () => sparkle.remove();
                 }
             }
-
-            function createEmoji(className, emojis) {
-                const el = document.createElement('div');
-                el.className = className;
-                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                el.style.left = `${Math.random() * 100}vw`;
-                const duration = className === 'floating-emoji' ? 10000 : 8000;
-                el.style.animationDuration = `${Math.random() * 3000 + duration}ms`;
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), duration + 3000);
-            }
-
-            function initParticleCanvas() {
-                const canvas = document.getElementById('particle-canvas'), ctx = canvas.getContext('2d');
-                let particles = []; const pCount = 70;
-                canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-                const colors = ['rgba(255,215,0,0.5)','rgba(255,171,64,0.5)','rgba(240,98,146,0.5)'];
-                class Particle { constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = Math.random()*1-.5; this.vy = Math.random()*1-.5; this.r = Math.random()*1.5+1; this.c = colors[Math.floor(Math.random()*colors.length)]; } draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=this.c; ctx.fill(); } update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; this.draw(); } }
-                function init(){ particles=[]; for(let i=0;i<pCount;i++){particles.push(new Particle());} }
-                function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>p.update()); requestAnimationFrame(animate); }
-                window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();});
-                init(); animate();
+            
+            function initCityscapeLights() {
+                const cityscapeLayer = document.getElementById('cityscape-layer');
+                for (let i = 0; i < 50; i++) {
+                    const light = document.createElement('div');
+                    light.className = 'flicker-light';
+                    Object.assign(light.style, {
+                        top: `${Math.random() * 50 + 50}%`,
+                        left: `${Math.random() * 100}%`,
+                        animationDelay: `${Math.random() * 5}s`,
+                        animationDuration: `${Math.random() * 3 + 2}s`
+                    });
+                    cityscapeLayer.appendChild(light);
+                }
             }
         });
     </script>
